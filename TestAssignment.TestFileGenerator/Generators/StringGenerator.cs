@@ -1,22 +1,23 @@
 ﻿using System.Collections.Concurrent;
 using TestAssignment.TestFileGenerator.Interfaces;
 
-namespace TestAssignment.TestFileGenerator;
+namespace TestAssignment.TestFileGenerator.Generators;
 
 public sealed class StringGenerator : IStringGenerator
 {
     private const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ";
     private const int MinStringLength = 1;
-    private const int MaxStringLength = 250;
-    private const int PercentOfRepeatingString = 10;
-    private const int MaxRepeatingStrings = 1000;
-    private static readonly ConcurrentDictionary<int, string> repeatingStringsStore = new();
+    private const int MaxStringLength = 250; //TODO make param of constructor
+    private const int PercentOfRepeatingString = 20; //TODO make param of constructor
+    private const int MaxRepeatingStrings = 1000; //TODO make param of constructor
+    private readonly ConcurrentDictionary<int, string> repeatingStringsStore = new(); 
+    private static readonly ThreadLocal<Random> _threadLocalRandom = new(() => new Random(Guid.NewGuid().GetHashCode()));
 
-    public string GenerateString()
+    public string Generate()
     {
-        if (!repeatingStringsStore.IsEmpty || Random.Shared.Next(0, 100) < PercentOfRepeatingString)
+        if (!repeatingStringsStore.IsEmpty && _threadLocalRandom.Value!.Next(0, 100) < PercentOfRepeatingString)
         {
-            var index = Random.Shared.Next(0, repeatingStringsStore.Count);
+            var index = _threadLocalRandom.Value!.Next(0, repeatingStringsStore.Count);
             if (repeatingStringsStore.TryGetValue(index, out var existingString))
             {
                 return existingString;
@@ -35,11 +36,11 @@ public sealed class StringGenerator : IStringGenerator
 
     private static string GenerateRandomString()
     {
-        int length = Random.Shared.Next(MinStringLength, MaxStringLength + 1);
+        int length = _threadLocalRandom.Value!.Next(MinStringLength, MaxStringLength + 1);
         char[] charArray = new char[length];
         for (int i = 0; i < length; i++)
         {
-            charArray[i] = chars[Random.Shared.Next(chars.Length)];
+            charArray[i] = chars[_threadLocalRandom.Value!.Next(chars.Length)];
         }
         return new string(charArray);
     }

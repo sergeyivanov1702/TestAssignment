@@ -2,5 +2,5 @@
 
 public interface IStringGenerator
 {
-    string GenerateString();
+    string Generate();
 }

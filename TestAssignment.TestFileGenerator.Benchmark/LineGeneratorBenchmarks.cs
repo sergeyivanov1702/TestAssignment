@@ -1,25 +1,21 @@
 ﻿using BenchmarkDotNet.Attributes;
+using TestAssignment.TestFileGenerator.Generators;
 
 namespace TestAssignment.TestFileGenerator.Benchmark;
 
-[MemoryDiagnoser, ShortRunJob]
+[MemoryDiagnoser]
 public class LineGeneratorBenchmarks
 {
     private readonly LineGenerator _lineGenerator;
     public LineGeneratorBenchmarks()
     {
-        _lineGenerator = new LineGenerator();
+        var stringGenerator = new StringGenerator();
+        _lineGenerator = new LineGenerator(stringGenerator);
     }
 
     [Benchmark(Baseline = true)]
     public string GenerateLine()
     {
-        return _lineGenerator.GenerateString();
-    }
-
-    [Benchmark]
-    public string GenerateLine2()
-    {
-        return _lineGenerator.GenerateString2();
+        return _lineGenerator.Generate();
     }
 }

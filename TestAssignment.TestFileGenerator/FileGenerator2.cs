@@ -46,7 +46,6 @@ public sealed class FileGenerator2
         string filePath, 
         long targetSizeInBytes, 
         bool useMultithreading = true,
-        IProgress<double>? progress = null,
         CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrEmpty(filePath))
@@ -61,18 +60,16 @@ public sealed class FileGenerator2
             Directory.CreateDirectory(directory);
 
         if (useMultithreading && targetSizeInBytes > 10_000_000) // Only use multithreading for files larger than 10MB
-            return await GenerateFileMultithreadedAsync(filePath, targetSizeInBytes, progress, cancellationToken);
+            return await GenerateFileMultithreadedAsync(filePath, targetSizeInBytes, cancellationToken);
         else
-            return await GenerateFileSingleThreadedAsync(filePath, targetSizeInBytes, progress, cancellationToken);
+            return await GenerateFileSingleThreadedAsync(filePath, targetSizeInBytes, cancellationToken);
     }
 
     private async Task<long> GenerateFileSingleThreadedAsync(
         string filePath, 
         long targetSizeInBytes,
-        IProgress<double>? progress = null,
         CancellationToken cancellationToken = default)
     {
-        var stopwatch = Stopwatch.StartNew();
         
         using var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, 
             bufferSize: 65536, useAsync: true);
@@ -80,9 +77,6 @@ public sealed class FileGenerator2
 
         long currentSize = 0;
         var stringBuilder = new StringBuilder(256); // Pre-allocate reasonable capacity
-        
-        // Report initial progress
-        progress?.Report(0);
         
         while (currentSize < targetSizeInBytes)
         {
@@ -99,20 +93,9 @@ public sealed class FileGenerator2
             
             // Update size tracking
             currentSize += Encoding.UTF8.GetByteCount(line) + Environment.NewLine.Length;
-            
-            // Report progress
-            if (progress != null)
-            {
-                double progressValue = (double)currentSize / targetSizeInBytes;
-                progress.Report(Math.Min(progressValue, 0.99)); // Cap at 99% until complete
-            }
         }
 
         await writer.FlushAsync();
-        stopwatch.Stop();
-        
-        // Report completion
-        progress?.Report(1.0);
         
         return currentSize;
     }
@@ -120,11 +103,8 @@ public sealed class FileGenerator2
     private async Task<long> GenerateFileMultithreadedAsync(
         string filePath, 
         long targetSizeInBytes,
-        IProgress<double>? progress = null,
         CancellationToken cancellationToken = default)
     {
-        var stopwatch = Stopwatch.StartNew();
-        
         // Determine optimal thread count based on available processors
         int processorCount = Environment.ProcessorCount;
         int threadCount = Math.Max(2, Math.Min(processorCount - 1, 8)); 
@@ -151,8 +131,6 @@ public sealed class FileGenerator2
         using var writer = new StreamWriter(fileStream, Encoding.UTF8);
         
         long actualSize = 0;
-        long totalLines = contentLists.Sum(list => list.Count);
-        long linesWritten = 0;
         
         foreach (var contentList in contentLists)
         {
@@ -161,15 +139,10 @@ public sealed class FileGenerator2
                 cancellationToken.ThrowIfCancellationRequested();
                 await writer.WriteLineAsync(line);
                 actualSize += Encoding.UTF8.GetByteCount(line) + Environment.NewLine.Length;
-                
-                // Update progress for writing phase
-                linesWritten++;
-                progress?.Report((double)linesWritten / totalLines);
             }
         }
         
         await writer.FlushAsync();
-        stopwatch.Stop();
         
         return actualSize;
     }
