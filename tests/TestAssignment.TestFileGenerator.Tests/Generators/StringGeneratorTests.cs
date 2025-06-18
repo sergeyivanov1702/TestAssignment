@@ -1,0 +1,44 @@
+using FluentAssertions;
+using TestAssignment.TestFileGenerator.Generators;
+
+namespace TestAssignment.TestFileGenerator.Tests.Generators;
+
+public class StringGeneratorTests
+{
+    private readonly StringGenerator _stringGenerator = new();
+
+    [Fact]
+    public void Generate_WhenCalled_ShouldReturnNonEmptyByteArray()
+    {
+        // Act
+        var result = _stringGenerator.Generate();
+
+        // Assert
+        result.Should().NotBeNull();
+        result.Should().NotBeEmpty();
+    }
+
+    [Fact]
+    public void Generate_WhenCalled_ShouldReturnArrayWithinLengthLimits()
+    {
+        // Act
+        var result = _stringGenerator.Generate();
+
+        // Assert
+        result.Length.Should().BeInRange(1, 250);
+    }
+
+    [Fact]
+    public void Generate_WhenCalled_ShouldReturnArrayWithAllowedBytes()
+    {
+        // Arrange
+        string allowedChars = " ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        var allowedBytes = System.Text.Encoding.UTF8.GetBytes(allowedChars);
+
+        // Act
+        var result = _stringGenerator.Generate();
+
+        // Assert
+        result.Should().OnlyContain(b => allowedBytes.Contains(b));
+    }
+}

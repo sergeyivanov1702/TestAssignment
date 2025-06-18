@@ -2,5 +2,5 @@
 
 public interface ILineGenerator
 {
-    string Generate();
+    byte[] Generate();
 }

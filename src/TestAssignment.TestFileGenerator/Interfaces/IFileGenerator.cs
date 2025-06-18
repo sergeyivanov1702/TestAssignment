@@ -1,5 +1,4 @@
-﻿
-namespace TestAssignment.TestFileGenerator.Interfaces;
+﻿namespace TestAssignment.TestFileGenerator.Interfaces;
 
 public interface IFileGenerator
 {

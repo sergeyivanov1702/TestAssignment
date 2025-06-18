@@ -8,11 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.15.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\TestAssignment.TestFileGenerator\TestAssignment.TestFileGenerator.csproj" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
   </ItemGroup>
 
 </Project>

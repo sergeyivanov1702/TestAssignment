@@ -1,6 +1,6 @@
 ﻿namespace TestAssignment.TestFileGenerator.Interfaces;
 
-public interface IByteArrayGenerator
+public interface IStringGenerator
 {
     byte[] Generate();
 }
