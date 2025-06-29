@@ -42,7 +42,11 @@ public sealed class StringGenerator : IStringGenerator
         int length = Random.Shared.Next(MinStringLength, MaxStringLength + 1);
         byte[] byteArray = new byte[length];
 
-        for (int i = 0; i < length; i++)
+        // Ensure the first and the last bytes are not spaces
+        byteArray[0] = AllowedBytes[Random.Shared.Next(1, AllowBytesLength)]; 
+        byteArray[length - 1] = AllowedBytes[Random.Shared.Next(1, AllowBytesLength)]; 
+
+        for (int i = 1; i < length - 1; i++)
         {
             byteArray[i] = AllowedBytes[Random.Shared.Next(0, AllowBytesLength)];
         }

@@ -6,7 +6,13 @@ namespace TestAssignment.TestFileGenerator.Benchmark;
 [LongRunJob]
 public class StringGeneratorBenchmarks
 {
-    private readonly StringGenerator _stringByteGenerator = new StringGenerator();
+    private StringGenerator _stringByteGenerator = default!;
+
+    [GlobalSetup]
+    public void Setup()
+    {
+        _stringByteGenerator = new StringGenerator();
+    }
 
     [Benchmark(Baseline = true)]
     public async Task GenerateStringAsByteArray()

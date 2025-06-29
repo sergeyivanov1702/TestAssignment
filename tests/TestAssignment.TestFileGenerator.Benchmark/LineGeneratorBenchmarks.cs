@@ -6,9 +6,10 @@ namespace TestAssignment.TestFileGenerator.Benchmark;
 [LongRunJob]
 public class LineGeneratorBenchmarks
 {
-    private readonly LineGenerator _lineByteGenerator;
+    private LineGenerator _lineByteGenerator = default!;
 
-    public LineGeneratorBenchmarks()
+    [GlobalSetup]
+    public void Setup()
     {
         _lineByteGenerator = new(new StringGenerator());
     }

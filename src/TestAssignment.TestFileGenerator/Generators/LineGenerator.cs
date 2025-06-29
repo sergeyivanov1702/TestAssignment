@@ -7,9 +7,10 @@ public sealed class LineGenerator : ILineGenerator
 {
     private const int MinNumberLength = 1;
     private const int MaxNumberLength = 5;
+    private const string Delimiter = ". ";
 
     private static readonly byte[] NewLineBytes = Encoding.UTF8.GetBytes(Environment.NewLine);
-    private static readonly byte[] DelimiterBytes = Encoding.UTF8.GetBytes(". ");
+    private static readonly byte[] DelimiterBytes = Encoding.UTF8.GetBytes(Delimiter);
     private static readonly byte[] NumberBytes = Encoding.UTF8.GetBytes("0123456789");
 
     private readonly IStringGenerator _stringByteGenerator;

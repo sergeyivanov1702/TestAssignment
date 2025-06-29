@@ -1,4 +1,5 @@
 ﻿using System.CommandLine;
+using System.Diagnostics;
 using TestAssignment.TestFileGenerator.Generators;
 
 var filePathArg = new Argument<string>(
@@ -26,6 +27,7 @@ rootCommand.SetHandler(async (filePath, targetMinimumSize, sizeUnit) =>
     try
     {
         Console.WriteLine("File generation process started.");
+        Stopwatch stopwatch = Stopwatch.StartNew();
 
         long multiplier = sizeUnit switch
         {
@@ -44,8 +46,9 @@ rootCommand.SetHandler(async (filePath, targetMinimumSize, sizeUnit) =>
         var fileGenerator = new FileGenerator(lineGenerator);
 
         await fileGenerator.GenerateAsync(filePath, sizeInBytes);
+        stopwatch.Stop();
 
-        Console.WriteLine($"\nFile '{filePath}' generated successfully.");
+        Console.WriteLine($"\nFile '{filePath}' generated successfully in {stopwatch.Elapsed.TotalSeconds} seconds.");
     }
     catch (Exception ex)
     {

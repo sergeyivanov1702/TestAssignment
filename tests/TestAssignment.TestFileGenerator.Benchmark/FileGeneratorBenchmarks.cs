@@ -3,14 +3,14 @@ using TestAssignment.TestFileGenerator.Generators;
 
 namespace TestAssignment.TestFileGenerator.Benchmark;
 
-[MediumRunJob]
 public class FileGeneratorBenchmarks
 {
     private const long FileSizeInBytes = 128L * 1024 * 1024; // 128 MB
-    private readonly FileGenerator _fileGenerator;
+    private FileGenerator _fileGenerator = default!;
 
-    public FileGeneratorBenchmarks()
-    {
+    [GlobalSetup]
+    public void Setup()
+    { 
         _fileGenerator = new FileGenerator(new LineGenerator(new StringGenerator()));
     }
 

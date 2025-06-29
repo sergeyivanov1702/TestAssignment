@@ -41,4 +41,26 @@ public class StringGeneratorTests
         // Assert
         result.Should().OnlyContain(b => allowedBytes.Contains(b));
     }
+
+    [Fact]
+    public void Generate_WhenCalled_ShouldNotStartWithSpace()
+    {
+        // Act
+        var result = _stringGenerator.Generate();
+
+        // Assert
+        result.Should().NotBeEmpty();
+        result[0].Should().NotBe((byte)' ');
+    }
+
+    [Fact]
+    public void Generate_WhenCalled_ShouldNotFinishWithSpace()
+    {
+        // Act
+        var result = _stringGenerator.Generate();
+
+        // Assert
+        result.Should().NotBeEmpty();
+        result[result.Length - 1].Should().NotBe((byte)' ');
+    }
 }
