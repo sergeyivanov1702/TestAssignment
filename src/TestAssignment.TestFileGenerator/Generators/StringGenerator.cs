@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using TestAssignment.TestFileGenerator.Interfaces;
 
-namespace TestAssignment.TestFileGenerator.Generators;
+namespace TestAssignment.TestFileGenerator;
 
 public sealed class StringGenerator : IStringGenerator
 {

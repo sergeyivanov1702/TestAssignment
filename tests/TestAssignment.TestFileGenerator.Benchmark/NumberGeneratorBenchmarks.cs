@@ -3,24 +3,24 @@
 namespace TestAssignment.TestFileGenerator.Benchmark;
 
 [LongRunJob]
-public class LineGeneratorBenchmarks
+public class NumberGeneratorBenchmarks
 {
-    private LineGenerator _lineByteGenerator = default!;
+    private NumberGenerator _numberGenerator = default!;
 
     [GlobalSetup]
     public void Setup()
     {
-        _lineByteGenerator = new(new StringGenerator(), new NumberGenerator());
+        _numberGenerator = new NumberGenerator();
     }
 
     [Benchmark(Baseline = true)]
-    public async Task GenerateLineAsByteArray()
+    public async Task GenerateNumber()
     {
         var threadCount = Environment.ProcessorCount - 1;
         var tasks = new List<Task>();
         for (int i = 0; i < threadCount; i++)
         {
-            tasks.Add(Task.Run(() => { var result = _lineByteGenerator.Generate(); }));
+            tasks.Add(Task.Run(() => { var result = _numberGenerator.Generate(); }));
         }
 
         await Task.WhenAll(tasks);

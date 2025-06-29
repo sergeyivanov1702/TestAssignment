@@ -1,7 +1,6 @@
 using FluentAssertions;
 using Moq;
 using System.Text;
-using TestAssignment.TestFileGenerator.Generators;
 using TestAssignment.TestFileGenerator.Interfaces;
 
 namespace TestAssignment.TestFileGenerator.Tests.Generators;
@@ -27,7 +26,7 @@ public class FileGeneratorTests
     public async Task GenerateAsync_WithNullOrWhiteSpacePath_ShouldThrowArgumentException(string? path)
     {
         // Act & Assert
-        await Assert.ThrowsAsync<ArgumentException>(() => _fileGenerator.GenerateAsync(path, 1024));
+        await Assert.ThrowsAsync<ArgumentException>(() => _fileGenerator.GenerateAsync(path!, 1024));
     }
 
     [Fact]

@@ -1,5 +1,4 @@
 ﻿using BenchmarkDotNet.Attributes;
-using TestAssignment.TestFileGenerator.Generators;
 
 namespace TestAssignment.TestFileGenerator.Benchmark;
 

@@ -1,5 +1,4 @@
 using FluentAssertions;
-using TestAssignment.TestFileGenerator.Generators;
 
 namespace TestAssignment.TestFileGenerator.Tests.Generators;
 

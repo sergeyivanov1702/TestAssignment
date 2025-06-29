@@ -1,6 +1,6 @@
 ﻿using System.CommandLine;
 using System.Diagnostics;
-using TestAssignment.TestFileGenerator.Generators;
+using TestAssignment.TestFileGenerator;
 
 var filePathArg = new Argument<string>(
     name: "filePath",
@@ -42,7 +42,8 @@ rootCommand.SetHandler(async (filePath, targetMinimumSize, sizeUnit) =>
         Console.WriteLine($"Target minimum size: {targetMinimumSize} {sizeUnit}");
 
         var stringGenerator = new StringGenerator();
-        var lineGenerator = new LineGenerator(stringGenerator);
+        var numberGenerator = new NumberGenerator();
+        var lineGenerator = new LineGenerator(stringGenerator, numberGenerator);
         var fileGenerator = new FileGenerator(lineGenerator);
 
         await fileGenerator.GenerateAsync(filePath, sizeInBytes);

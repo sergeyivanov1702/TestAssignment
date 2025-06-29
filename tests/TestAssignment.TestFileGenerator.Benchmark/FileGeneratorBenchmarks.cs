@@ -1,5 +1,4 @@
 ﻿using BenchmarkDotNet.Attributes;
-using TestAssignment.TestFileGenerator.Generators;
 
 namespace TestAssignment.TestFileGenerator.Benchmark;
 
@@ -11,7 +10,7 @@ public class FileGeneratorBenchmarks
     [GlobalSetup]
     public void Setup()
     { 
-        _fileGenerator = new FileGenerator(new LineGenerator(new StringGenerator()));
+        _fileGenerator = new FileGenerator(new LineGenerator(new StringGenerator(), new NumberGenerator()));
     }
 
     [Benchmark(Baseline = true)]

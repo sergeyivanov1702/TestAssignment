@@ -3,7 +3,7 @@ using System.Text;
 using System.Threading.Channels;
 using TestAssignment.TestFileGenerator.Interfaces;
 
-namespace TestAssignment.TestFileGenerator.Generators;
+namespace TestAssignment.TestFileGenerator;
 
 public sealed class FileGenerator : IFileGenerator
 {
