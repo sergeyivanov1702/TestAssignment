@@ -5,11 +5,11 @@ using TestAssignment.TestFileGenerator;
 var parser = new Parser(settings =>
 {
     settings.IgnoreUnknownArguments = true;
+    settings.HelpWriter = Console.Out;
 });
 
 parser.ParseArguments<Options>(args)
-    .WithParsed(Run)
-    .WithNotParsed(HandleParseError);
+    .WithParsed(Run);
 
 static void Run(Options opts)
 {
@@ -44,15 +44,6 @@ static void Run(Options opts)
     catch (Exception ex)
     {
         Console.Error.WriteLine($"\nAn error occurred during file generation: {ex.Message}");
-    }
-}
-
-static void HandleParseError(IEnumerable<Error> errs)
-{
-    var actualErrors = errs.Where(e => e.Tag != ErrorType.UnknownOptionError);
-    foreach (var error in actualErrors)
-    {
-        Console.Error.WriteLine(error.ToString());
     }
 }
 

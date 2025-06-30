@@ -4,11 +4,11 @@ using TestAssignment.Sorter;
 var parser = new Parser(settings =>
 {
     settings.IgnoreUnknownArguments = true;
+    settings.HelpWriter = Console.Out;
 });
 
 parser.ParseArguments<SortOptions>(args)
-    .WithParsed(SortFile)
-    .WithNotParsed(HandleParseError);
+    .WithParsed(SortFile);
 
 static void SortFile(SortOptions opts)
 {
@@ -21,13 +21,4 @@ static void SortFile(SortOptions opts)
 
     var fileSorter = new ExternalSorter(reader, sorter, merger);
     fileSorter.Execute(opts);
-}
-
-static void HandleParseError(IEnumerable<Error> errs)
-{
-    var actualErrors = errs.Where(e => e.Tag != ErrorType.UnknownOptionError);
-    foreach (var error in actualErrors)
-    {
-        Console.Error.WriteLine(error.ToString());
-    }
 }
