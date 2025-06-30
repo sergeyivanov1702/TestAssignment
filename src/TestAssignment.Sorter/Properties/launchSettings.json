@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TestAssignment.Sorter": {
+      "commandName": "Project",
+      "commandLineArgs": "-i original.txt -o sorted.txt"
+    }
+  }
+}

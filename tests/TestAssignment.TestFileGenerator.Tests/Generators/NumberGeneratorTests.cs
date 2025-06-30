@@ -2,7 +2,7 @@ using FluentAssertions;
 
 namespace TestAssignment.TestFileGenerator.Tests.Generators;
 
-public class NumberGeneratorTests
+public sealed class NumberGeneratorTests
 {
   private readonly NumberGenerator _numberGenerator = new();
 

@@ -5,7 +5,7 @@ using TestAssignment.TestFileGenerator.Interfaces;
 
 namespace TestAssignment.TestFileGenerator.Tests.Generators;
 
-public class LineGeneratorTests
+public sealed class LineGeneratorTests
 {
     private static readonly byte[] DelimiterBytes = Encoding.UTF8.GetBytes(". ");
     private static readonly byte[] MockStringBytes = Encoding.UTF8.GetBytes("test string");
