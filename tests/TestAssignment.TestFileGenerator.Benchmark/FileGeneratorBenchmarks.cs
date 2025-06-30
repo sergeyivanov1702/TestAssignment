@@ -4,6 +4,7 @@ namespace TestAssignment.TestFileGenerator.Benchmark;
 
 public class FileGeneratorBenchmarks
 {
+    private const string OutputFileName = "testfile1.txt";
     private const long FileSizeInBytes = 128L * 1024 * 1024; // 128 MB
     private FileGenerator _fileGenerator = default!;
 
@@ -13,10 +14,18 @@ public class FileGeneratorBenchmarks
         _fileGenerator = new FileGenerator(new LineGenerator(new StringGenerator(), new NumberGenerator()));
     }
 
+    [GlobalCleanup]
+    public void Cleanup()
+    {
+        if (File.Exists(OutputFileName))
+        {
+            File.Delete(OutputFileName);
+        }
+    }
+
     [Benchmark(Baseline = true)]
     public async Task GenerateFile()
     {
-        const string outputFilePath = "testfile1.txt";
-        await _fileGenerator.GenerateAsync(outputFilePath, FileSizeInBytes);
+        await _fileGenerator.GenerateAsync(OutputFileName, FileSizeInBytes);
     }
 }
