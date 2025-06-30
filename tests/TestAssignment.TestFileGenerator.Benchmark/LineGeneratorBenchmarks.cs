@@ -2,7 +2,6 @@
 
 namespace TestAssignment.TestFileGenerator.Benchmark;
 
-[LongRunJob]
 public class LineGeneratorBenchmarks
 {
     private LineGenerator _lineByteGenerator = default!;

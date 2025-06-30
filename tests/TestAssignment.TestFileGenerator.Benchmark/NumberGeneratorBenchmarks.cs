@@ -2,7 +2,6 @@
 
 namespace TestAssignment.TestFileGenerator.Benchmark;
 
-[LongRunJob]
 public class NumberGeneratorBenchmarks
 {
     private NumberGenerator _numberGenerator = default!;

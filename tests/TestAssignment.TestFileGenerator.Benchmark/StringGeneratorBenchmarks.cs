@@ -2,7 +2,6 @@
 
 namespace TestAssignment.TestFileGenerator.Benchmark;
 
-[LongRunJob]
 public class StringGeneratorBenchmarks
 {
     private StringGenerator _stringByteGenerator = default!;
