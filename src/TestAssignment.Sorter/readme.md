@@ -22,8 +22,8 @@ The main application `TestAssignment.Sorter` can be run from the command line. I
 **Example:**
 
 ```bash
-dotnet run --project .\src\TestAssignment.Sorter\TestAssignment.Sorter.csproj -- --input "test.txt" --output "sorted_test.txt"
-```
+dotnet run --project .\src\TestAssignment.Sorter\TestAssignment.Sorter.csproj -c Release -- --input "test.txt" --output "sorted_test.txt"
+```	
 
 This command will sort the file named `test.txt` and save the result to `sorted_test.txt`.
 

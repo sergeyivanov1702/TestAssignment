@@ -12,14 +12,14 @@ This solution contains three projects:
 
 The main application `TestAssignment.TestFileGenerator` can be run from the command line. It accepts three arguments:
 
--   `filePath`: The path where the generated file will be saved.
--   `targetMinimumSize`: The minimum size of the generated file.
--   `sizeUnit`: The unit of the size, which can be `MB` or `GB`.
+-   `--output`: The path where the generated file will be saved.
+-   `--size`: The minimum size of the generated file.
+-   `--unit`: The unit of the size, which can be `MB` or `GB`.
 
 **Example:**
 
 ```bash
-dotnet run --project .\src\TestAssignment.TestFileGenerator\TestAssignment.TestFileGenerator.csproj -- "test.txt" 10 GB
+dotnet run -c Release --project .\src\TestAssignment.TestFileGenerator\TestAssignment.TestFileGenerator.csproj -- --output "test.txt" --size 10 --unit GB
 ```	
 
 This command will generate a file named `test.txt` with a minimum size of 10 GB.
