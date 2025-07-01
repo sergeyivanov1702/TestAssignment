@@ -18,9 +18,9 @@ public sealed class SortOptions
     [Option("keep-temp", Default = false, HelpText = "Keep temporary files after sorting is completed.")]
     public bool KeepTempFiles { get; set; }
 
-    [Option("chunk-size", Default = 100L * 1024 * 1024, HelpText = "Chunk size in bytes.")]
+    [Option("chunk-size", Default = 50L * 1024 * 1024, HelpText = "Chunk size in bytes.")]
     public long ChunkSizeInBytes { get; set; }
 
     [Option("parallelism", HelpText = "Max degree of parallelism.")]
-    public int MaxDegreeOfParallelism { get; set; } = Environment.ProcessorCount;
+    public int MaxDegreeOfParallelism { get; set; } = Math.Max(1, Environment.ProcessorCount / 2);
 }
